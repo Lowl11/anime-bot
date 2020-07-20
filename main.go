@@ -37,6 +37,9 @@ func startBotActivity() {
 }
 
 func collectAnimeAndSend() {
+	fmt.Println("")
+	log.Printf("*** Job started ***\n\n")
+
 	bot := telegram.GetBot(Config.BotToken)
 
 	// message which will be sended
@@ -58,6 +61,7 @@ func collectAnimeAndSend() {
 	}
 
 	fmt.Println("")
+	log.Printf("*** Job Successfully done ***\n\n")
 }
 
 func readConfig() {
