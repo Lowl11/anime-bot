@@ -19,7 +19,7 @@ func PrepareMessage(animeList []parser.Anime) string {
 	var message string
 	if len(animeList) == 1 {
 		message += "Вышло новое аниме!"
-	} else if len(animeList) == 2 {
+	} else if len(animeList) >= 2 {
 		message += "Вышли новые аниме!"
 	}
 	message += "\n"
