@@ -5,6 +5,7 @@ import (
 	"anime-bot/parser"
 	"anime-bot/telegram"
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 
@@ -13,8 +14,11 @@ import (
 
 // Configuration - structure of json file with settings
 type Configuration struct {
-	ChatID   int64  `json:"chat_id"`
-	BotToken string `json:"bot_token"`
+	ChatID     int64  `json:"chat_id"`
+	BotToken   string `json:"bot_token"`
+	DbUser     string `json:"db_user"`
+	DbPassword string `json:"db_password"`
+	DbName     string `json:"db_name"`
 }
 
 // Config - structure of json file with settings
@@ -42,7 +46,7 @@ func collectAnimeAndSend() {
 	// getting anime list
 	anistarAnimeList := parser.ParseAnistar()
 
-	db.InitializeDatabase()
+	db.InitializeDatabase(Config.DbUser, Config.DbPassword, Config.DbName)
 	comparedAnimeList := db.CompareAnimeList(anistarAnimeList)
 	if len(comparedAnimeList) > 0 {
 		messageText = telegram.PrepareMessage(comparedAnimeList)
@@ -52,6 +56,8 @@ func collectAnimeAndSend() {
 	if sendMessage {
 		telegram.SendMessage(bot, Config.ChatID, messageText)
 	}
+
+	fmt.Println("")
 }
 
 func readConfig() {
